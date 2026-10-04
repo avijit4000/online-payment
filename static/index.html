@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8fb" />
+    <title>RozPay — secure checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="RozPay home"><span class="brand-mark">r</span><span>rozpay</span></a>
+      <div class="secure-label"><span class="lock-icon" aria-hidden="true">⌑</span> Secure checkout</div>
+    </header>
+
+    <main class="layout">
+      <section class="intro">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> SIMPLE. SECURE. SEAMLESS.</div>
+        <h1>Good things<br />are <span>one step</span> away.</h1>
+        <p class="intro-copy">Complete your purchase using a payment method you trust. Your payment is processed securely by Razorpay.</p>
+        <div class="trust-row"><span class="trust-icon">✓</span><span>Protected with industry-standard encryption</span></div>
+      </section>
+
+      <section class="checkout-card" aria-labelledby="checkout-title">
+        <div class="card-heading">
+          <div>
+            <p class="section-label">YOUR ORDER</p>
+            <h2 id="checkout-title">Order summary</h2>
+          </div>
+          <div class="item-count">01 ITEM</div>
+        </div>
+
+        <div class="product-row">
+          <div class="product-art" aria-hidden="true"><span class="art-orbit orbit-one"></span><span class="art-orbit orbit-two"></span><span class="art-core">r</span></div>
+          <div class="product-info"><h3 id="product-name">Loading product…</h3><p id="product-description">Please wait while we prepare your checkout.</p></div>
+          <div class="product-price" id="product-price">—</div>
+        </div>
+
+        <label class="amount-label" for="amount-input">Amount to pay <span>INR ₹</span></label>
+        <div class="amount-field">
+          <span aria-hidden="true">₹</span>
+          <input id="amount-input" name="amount" type="number" min="1.00" max="100000.00" step="0.01" value="5.00" inputmode="decimal" required aria-describedby="amount-help" />
+        </div>
+        <p class="amount-help" id="amount-help">Enter any amount from ₹1.00 to ₹1,00,000.00.</p>
+
+        <div class="summary-line"><span>Subtotal</span><span id="subtotal">—</span></div>
+        <div class="summary-line"><span>Taxes</span><span class="included">Included</span></div>
+        <div class="summary-total"><span>Total due</span><span id="total">—</span></div>
+
+        <button class="pay-button" id="pay-button" type="button" disabled>
+          <span id="button-label">Preparing secure checkout</span><span class="button-arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="payment-note"><span class="note-lock" aria-hidden="true">●</span> Payments are securely encrypted</p>
+        <div class="payment-methods" aria-label="Available payment methods"><span>UPI</span><span>CARDS</span><span>NETBANKING</span><span>WALLETS</span></div>
+        <div class="status" id="payment-status" role="status" aria-live="polite" hidden></div>
+      </section>
+    </main>
+
+    <footer><span>© <span id="year"></span> RozPay Demo</span><span>Powered by <strong>Razorpay</strong></span></footer>
+  </body>
+</html>

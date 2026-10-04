@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8f6" />
+    <title>Payment successful — RozPay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/payment-success.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="RozPay home"><span class="brand-mark">r</span><span>rozpay</span></a>
+      <div class="secure-label"><span class="lock-icon" aria-hidden="true">⌑</span> Secure checkout</div>
+    </header>
+    <main class="result-layout">
+      <section class="result-card success-card" aria-labelledby="result-title">
+        <div class="result-icon success-icon" aria-hidden="true">✓</div>
+        <p class="section-label">PAYMENT CONFIRMED</p>
+        <h1 id="result-title">Payment successful!</h1>
+        <p class="result-copy">Your payment was captured successfully. Keep the payment ID below for your records.</p>
+        <div class="payment-id-box"><span>PAYMENT ID</span><strong id="payment-id">Loading…</strong></div>
+        <a class="result-button" href="/">Return to checkout <span aria-hidden="true">→</span></a>
+        <p class="result-footnote">A payment receipt will be provided by the merchant, if applicable.</p>
+      </section>
+    </main>
+    <footer><span>© <span id="year"></span> RozPay Demo</span><span>Powered by <strong>Razorpay</strong></span></footer>
+  </body>
+</html>

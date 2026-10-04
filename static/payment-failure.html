@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8f6" />
+    <title>Payment not completed — RozPay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/payment-failure.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="RozPay home"><span class="brand-mark">r</span><span>rozpay</span></a>
+      <div class="secure-label"><span class="lock-icon" aria-hidden="true">⌑</span> Secure checkout</div>
+    </header>
+    <main class="result-layout">
+      <section class="result-card failure-card" aria-labelledby="result-title">
+        <div class="result-icon failure-icon" aria-hidden="true">!</div>
+        <p class="section-label failure-label">PAYMENT NOT COMPLETED</p>
+        <h1 id="result-title">We couldn’t complete your payment</h1>
+        <p class="result-copy">The reason reported by the payment service is shown below.</p>
+        <div class="failure-reason"><span>REASON</span><p id="failure-reason">Loading…</p></div>
+        <div class="payment-id-box" id="payment-id-box" hidden><span>PAYMENT ID</span><strong id="payment-id"></strong></div>
+        <p class="refund-note">If your account was debited, do not retry immediately. Contact the merchant with the payment ID (if shown) so they can check the payment status.</p>
+        <a class="result-button" href="/">Return to checkout <span aria-hidden="true">→</span></a>
+      </section>
+    </main>
+    <footer><span>© <span id="year"></span> RozPay Demo</span><span>Powered by <strong>Razorpay</strong></span></footer>
+  </body>
+</html>
