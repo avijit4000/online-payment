@@ -45,6 +45,19 @@ h2 { margin: 0; font: 700 20px Manrope, sans-serif; letter-spacing: -.5px; }
 .amount-field:focus-within { border-color: #66a989; box-shadow: 0 0 0 3px #e8f4ed; }
 .amount-field input { width: 100%; height: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font: 600 14px "DM Sans", sans-serif; }
 .amount-help { margin: 6px 0 0; color: #89928d; font-size: 10px; }
+.gateway-picker { margin: 20px 0 0; padding: 0; border: 0; }
+.gateway-picker legend { margin-bottom: 9px; color: #53615a; font-size: 11px; font-weight: 700; }
+.gateway-option { position: relative; min-height: 56px; margin-top: 8px; padding: 10px 12px; display: flex; align-items: center; gap: 11px; border: 1px solid #e5eae6; border-radius: 7px; cursor: pointer; transition: border-color .15s, background .15s; }
+.gateway-option:has(input:checked) { border-color: #79b394; background: #f7fbf8; }
+.gateway-option:has(input:disabled) { opacity: .45; cursor: not-allowed; }
+.gateway-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.gateway-option input:focus-visible + .gateway-radio { outline: 2px solid #16795b; outline-offset: 3px; }
+.gateway-radio { width: 16px; height: 16px; flex: 0 0 16px; display: grid; place-items: center; border: 1px solid #b7c2bb; border-radius: 50%; }
+.gateway-option input:checked + .gateway-radio { border-color: var(--green); }
+.gateway-option input:checked + .gateway-radio::after { width: 8px; height: 8px; border-radius: 50%; background: var(--green); content: ""; }
+.gateway-text { display: grid; gap: 3px; }
+.gateway-text strong { color: #344139; font-size: 11px; }
+.gateway-text small { color: #89928d; font-size: 10px; }
 .summary-line, .summary-total { display: flex; justify-content: space-between; align-items: center; color: #78817d; font-size: 12px; }
 .summary-line { margin-top: 17px; }
 .included { color: var(--green); font-size: 11px; font-weight: 600; }

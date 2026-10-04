@@ -19,6 +19,10 @@ function setBusy(busy, label) {
   buttonLabel.textContent = label;
 }
 
+function selectedProvider() {
+  return document.querySelector('input[name="gateway"]:checked')?.value || "";
+}
+
 function updateAmountDisplay() {
   if (!amountInput.validity.valid || !amountInput.value) {
     payButton.disabled = true;
@@ -28,7 +32,7 @@ function updateAmountDisplay() {
   document.querySelector("#product-price").textContent = price;
   document.querySelector("#subtotal").textContent = price;
   document.querySelector("#total").textContent = price;
-  payButton.disabled = !checkoutConfig;
+  payButton.disabled = !checkoutConfig?.providers?.[selectedProvider()];
 }
 
 async function readJson(response) {
@@ -70,8 +74,20 @@ async function initialize() {
     checkoutConfig = await readJson(await fetch("/api/config"));
     document.querySelector("#product-name").textContent = checkoutConfig.product_name;
     document.querySelector("#product-description").textContent = checkoutConfig.product_description;
+    const razorpayRadio = document.querySelector("#gateway-razorpay");
+    const phonepeRadio = document.querySelector("#gateway-phonepe");
+    razorpayRadio.disabled = !checkoutConfig.providers.razorpay;
+    phonepeRadio.disabled = !checkoutConfig.providers.phonepe;
+    if (!checkoutConfig.providers.razorpay && checkoutConfig.providers.phonepe) {
+      phonepeRadio.checked = true;
+    }
+    if (!checkoutConfig.providers.razorpay && !checkoutConfig.providers.phonepe) {
+      showStatus("No payment gateway is configured. Add Razorpay or PhonePe credentials to the server .env file.", "error");
+    }
     updateAmountDisplay();
-    buttonLabel.textContent = "Continue to payment";
+    buttonLabel.textContent = checkoutConfig.providers.razorpay || checkoutConfig.providers.phonepe
+      ? "Continue to payment"
+      : "Checkout unavailable";
   } catch (error) {
     showStatus(error.message, "error");
     setBusy(true, "Checkout unavailable");
@@ -79,6 +95,9 @@ async function initialize() {
 }
 
 amountInput.addEventListener("input", updateAmountDisplay);
+document.querySelectorAll('input[name="gateway"]').forEach((radio) => {
+  radio.addEventListener("change", updateAmountDisplay);
+});
 
 payButton.addEventListener("click", async () => {
   if (pendingPayment) {
@@ -86,7 +105,14 @@ payButton.addEventListener("click", async () => {
     return;
   }
   if (!checkoutConfig || !window.Razorpay) {
-    showStatus("Secure checkout could not load. Check your connection and refresh the page.", "error");
+    if (!checkoutConfig || selectedProvider() !== "phonepe") {
+      showStatus("Secure checkout could not load. Check your connection and refresh the page.", "error");
+      return;
+    }
+  }
+  const provider = selectedProvider();
+  if (!checkoutConfig?.providers?.[provider]) {
+    showStatus("The selected payment gateway is not configured.", "error");
     return;
   }
 
@@ -96,12 +122,21 @@ payButton.addEventListener("click", async () => {
     const order = await readJson(await fetch("/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount_rupees: amountInput.value }),
+      body: JSON.stringify({ amount_rupees: amountInput.value, provider }),
     }));
     const confirmedAmount = formatter.format(order.amount_paise / 100);
     document.querySelector("#product-price").textContent = confirmedAmount;
     document.querySelector("#subtotal").textContent = confirmedAmount;
     document.querySelector("#total").textContent = confirmedAmount;
+    if (order.provider === "phonepe") {
+      const checkoutUrl = new URL(order.redirect_url);
+      if (checkoutUrl.protocol !== "https:" || !(checkoutUrl.hostname === "phonepe.com" || checkoutUrl.hostname.endsWith(".phonepe.com"))) {
+        throw new Error("PhonePe returned an invalid checkout URL.");
+      }
+      window.location.assign(checkoutUrl.toString());
+      return;
+    }
+
     const checkout = new window.Razorpay({
       key: order.key_id,
       amount: order.amount_paise,

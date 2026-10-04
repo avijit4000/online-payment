@@ -48,6 +48,20 @@
         </div>
         <p class="amount-help" id="amount-help">Enter any amount from ₹1.00 to ₹1,00,000.00.</p>
 
+        <fieldset class="gateway-picker" id="gateway-picker">
+          <legend>Choose payment gateway</legend>
+          <label class="gateway-option" for="gateway-razorpay">
+            <input id="gateway-razorpay" type="radio" name="gateway" value="razorpay" checked />
+            <span class="gateway-radio" aria-hidden="true"></span>
+            <span class="gateway-text"><strong>Razorpay</strong><small>UPI, cards, netbanking &amp; more</small></span>
+          </label>
+          <label class="gateway-option" for="gateway-phonepe">
+            <input id="gateway-phonepe" type="radio" name="gateway" value="phonepe" />
+            <span class="gateway-radio" aria-hidden="true"></span>
+            <span class="gateway-text"><strong>PhonePe</strong><small>Pay securely with PhonePe</small></span>
+          </label>
+        </fieldset>
+
         <div class="summary-line"><span>Subtotal</span><span id="subtotal">—</span></div>
         <div class="summary-line"><span>Taxes</span><span class="included">Included</span></div>
         <div class="summary-total"><span>Total due</span><span id="total">—</span></div>
